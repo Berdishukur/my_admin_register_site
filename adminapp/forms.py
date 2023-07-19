@@ -25,3 +25,10 @@ class SubjectForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={'class': 'form-control'})
         }
+class TeacherForm(forms.ModelForm):
+    class Meta:
+        model = Teacher
+        fields = "__all__"
+        widgets = {
+            "name": forms.TextInput(attrs={'class': 'form-control'})
+        }

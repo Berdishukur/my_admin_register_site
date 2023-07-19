@@ -36,4 +36,11 @@ def get_subject():
         return subject
 
 
+def get_teacher():
+    with closing(connection.cursor()) as cursor:
+        cursor.execute("""SELECT * from adminapp_teacher""")
+        teacher = dictfetchall(cursor)
+        return teacher
+
+
 

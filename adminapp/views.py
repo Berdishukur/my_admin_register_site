@@ -33,11 +33,13 @@ def home_page(request):
     faculties = services.get_faculties()
     kafedras = services.get_kafedra()
     subjects=services.get_subject()
+    teachers=services.get_teacher()
     ctx = {
         'counts': {
             'faculties': len(faculties),
             'kafedras': len(kafedras),
-            'subjects':len(subjects)
+            'subjects':len(subjects),
+            'teachers':len(teachers),
         }
     }
     return render(request, 'index.html', ctx)
@@ -168,3 +170,42 @@ def subject_edit(request, pk):
         "form": form
     }
     return render(request, 'subject/form.html', ctx)
+
+    #####################   TEACHER ########################
+@login_required_decorator
+def teacher_list(request):
+    teacher = services.get_teacher()
+    ctx = {
+        "teachers": teacher
+    }
+    return render(request, 'teacher/list.html', ctx)
+
+def teacher_edit(request,pk):
+    model=Teacher.objects.get(pk=pk)
+    form=TeacherForm(request.POST or  None ,instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('teacher_list')
+    ctx={
+        'model':model,
+        'form':form
+    }
+    return render(request,'teacher/form.html',ctx)
+@login_required_decorator
+def teacher_create(request):
+    model=Teacher()
+    form=TeacherForm(request.POST or None ,instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('teacher_list')
+    ctx={
+        "form":form
+    }
+    return  render(request,'subject/form.html',ctx)
+
+@login_required_decorator
+def teacher_delete(request,pk):
+    model=Teacher.objects.get(pk=pk)
+    model.delete()
+    return redirect('teacher_list')
+

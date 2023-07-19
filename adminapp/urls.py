@@ -19,7 +19,21 @@ urlpatterns = [
     path('subject/list/', subject_list, name='subject_list'),
     path('subject/create/', subject_create, name='subject_create'),
     path('subject/<int:pk>/edit/', subject_edit, name='subject_edit'),
-    path('subject/list/',subject_list,name='subject_list'),
     path('subject/<int:pk>/delete/', subject_delete, name='subject_delete'),
 
+    path('list/', teacher_list, name='teacher_list'),
+    path('create/',teacher_create,name='teacher_create'),
+    path('teacher/<int:pk>/delete/',teacher_delete,name='teacher_delete'),
+    path('teacher/<int:pk>/edit',teacher_edit,name='teacher_edit'),
+
+
 ]
+
+
+
+
+
+
+
+
+
