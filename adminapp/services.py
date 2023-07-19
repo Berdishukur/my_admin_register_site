@@ -47,5 +47,10 @@ def get_group():
         group = dictfetchall(cursor)
         return group
 
+def get_student():
+    with closing(connection.cursor()) as cursor:
+        cursor.execute(""" SELECT * from adminapp_students""")
+        group=dictfetchall(cursor)
+        return group
 
 

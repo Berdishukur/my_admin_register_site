@@ -35,6 +35,7 @@ def home_page(request):
     subjects=services.get_subject()
     teachers=services.get_teacher()
     gourps=services.get_group()
+    students=services.get_student()
     ctx = {
         'counts': {
             'faculties': len(faculties),
@@ -42,6 +43,7 @@ def home_page(request):
             'subjects':len(subjects),
             'teachers':len(teachers),
             'groups':len(gourps),
+            'students':len(students),
 
         }
     }
@@ -214,6 +216,7 @@ def teacher_delete(request,pk):
 
 
                ######################## GROUP ###################################
+@login_required_decorator
 def group_edit(request,pk):
     model=Group.objects.get(pk=pk)
     form=GroupForm(request.POST or  None ,instance=model)
@@ -230,13 +233,14 @@ def group_delete(request,pk):
     model=Group.objects.get(pk=pk)
     model.delete()
     return redirect('group_list')
-
+@login_required_decorator
 def group_list(request):
     groups=services.get_group()
     ctx={
         "groups":groups
     }
     return render(request,'group/list.html',ctx)
+@login_required_decorator
 def group_create(request):
     model=Group()
     form=GroupForm(request.POST or None ,instance=model)
@@ -247,3 +251,40 @@ def group_create(request):
         "form":form
     }
     return  render(request,'group/form.html',ctx)
+  ################ STUDENTS ###########
+@login_required_decorator
+def student_delete(request,pk):
+    model=Students.objects.get(pk=pk)
+    model.delete()
+    return redirect('student_list')
+@login_required_decorator
+def student_edit(request,pk):
+    model=Students.objects.get(pk=pk)
+    form=StudentForm(request.POST or None ,instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('student_list')
+    ctx={
+         'model': model,
+         'form': form
+    }
+    return render(request,'student/form.html',ctx)
+@login_required_decorator
+def student_list(request):
+    students=services.get_student()
+    ctx={
+        'students':students
+    }
+    return render(request,'student/list.html',ctx)
+@login_required_decorator
+def student_create(request):
+    model=Students()
+    form=StudentForm(request.POST or None , instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('student_list')
+    ctx={
+        'form':form
+    }
+    return render(request,'student/form.html',ctx)
+

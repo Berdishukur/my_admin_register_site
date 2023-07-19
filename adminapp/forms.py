@@ -39,3 +39,13 @@ class GroupForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={'class': 'form-control'})
         }
+
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model =Students
+        fields="__all__"
+        widgets={
+            "name":forms.TextInput(attrs={'class':'form-control'})
+        }
+
+
