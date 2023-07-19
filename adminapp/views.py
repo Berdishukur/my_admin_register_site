@@ -34,12 +34,15 @@ def home_page(request):
     kafedras = services.get_kafedra()
     subjects=services.get_subject()
     teachers=services.get_teacher()
+    gourps=services.get_group()
     ctx = {
         'counts': {
             'faculties': len(faculties),
             'kafedras': len(kafedras),
             'subjects':len(subjects),
             'teachers':len(teachers),
+            'groups':len(gourps),
+
         }
     }
     return render(request, 'index.html', ctx)
@@ -174,9 +177,9 @@ def subject_edit(request, pk):
     #####################   TEACHER ########################
 @login_required_decorator
 def teacher_list(request):
-    teacher = services.get_teacher()
+    teachers = services.get_teacher()
     ctx = {
-        "teachers": teacher
+        "teachers": teachers
     }
     return render(request, 'teacher/list.html', ctx)
 
@@ -209,3 +212,38 @@ def teacher_delete(request,pk):
     model.delete()
     return redirect('teacher_list')
 
+
+               ######################## GROUP ###################################
+def group_edit(request,pk):
+    model=Group.objects.get(pk=pk)
+    form=GroupForm(request.POST or  None ,instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('group_list')
+    ctx={
+        'model':model,
+        'form':form
+    }
+    return render(request,'group/form.html',ctx)
+@login_required_decorator
+def group_delete(request,pk):
+    model=Group.objects.get(pk=pk)
+    model.delete()
+    return redirect('group_list')
+
+def group_list(request):
+    groups=services.get_group()
+    ctx={
+        "groups":groups
+    }
+    return render(request,'group/list.html',ctx)
+def group_create(request):
+    model=Group()
+    form=GroupForm(request.POST or None ,instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('group_list')
+    ctx={
+        "form":form
+    }
+    return  render(request,'group/form.html',ctx)

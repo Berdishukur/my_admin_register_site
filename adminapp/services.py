@@ -41,6 +41,11 @@ def get_teacher():
         cursor.execute("""SELECT * from adminapp_teacher""")
         teacher = dictfetchall(cursor)
         return teacher
+def get_group():
+    with closing(connection.cursor()) as cursor:
+        cursor.execute("""SELECT * from adminapp_group""")
+        group = dictfetchall(cursor)
+        return group
 
 
 
