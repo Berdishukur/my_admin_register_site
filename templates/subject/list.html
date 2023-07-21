@@ -36,8 +36,8 @@
                                 <tbody>
                                     {% for subject in subjects %}
                                     <tr>
-                                        <td>{{ subject.id }}</td>
-                                        <td>{{ subject.name }}</td>
+                                        <td>{{subject.id }}</td>
+                                        <td>{{subject.name }}</td>
                                         <td>
                                             <div class="table-data-feature">
                                                 <a class="item" data-toggle="tooltip" href="{% url 'subject_edit' pk=subject.id %}" data-placement="top" title="" data-original-title="Edit">
