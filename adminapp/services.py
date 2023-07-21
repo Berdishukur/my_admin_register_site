@@ -24,33 +24,44 @@ def get_faculties():
         return faculties
 
 
+def get_groups():
+    with closing(connection.cursor()) as cursor:
+        cursor.execute("""SELECT adminapp_group.id, adminapp_group.name, adminapp_faculty.name as faculty
+         from adminapp_group left join adminapp_faculty on adminapp_group.faculty_id = adminapp_faculty.id
+         """)
+        groups = dictfetchall(cursor)
+        return groups
+
+
 def get_kafedra():
     with closing(connection.cursor()) as cursor:
         cursor.execute("""SELECT * from adminapp_kafedra""")
         kafedra = dictfetchall(cursor)
         return kafedra
+
+
 def get_subject():
     with closing(connection.cursor()) as cursor:
         cursor.execute("""SELECT * from adminapp_subject""")
-        subject = dictfetchall(cursor)
-        return subject
+        subjects = dictfetchall(cursor)
+        return subjects
 
 
 def get_teacher():
     with closing(connection.cursor()) as cursor:
-        cursor.execute("""SELECT * from adminapp_teacher""")
-        teacher = dictfetchall(cursor)
-        return teacher
-def get_group():
-    with closing(connection.cursor()) as cursor:
-        cursor.execute("""SELECT * from adminapp_group""")
-        group = dictfetchall(cursor)
-        return group
+        cursor.execute("""SELECT adminapp_teacher.id, adminapp_teacher.first_name, adminapp_teacher.last_name,
+        adminapp_teacher.age, adminapp_kafedra.name as kafedra_name, adminapp_subject.name as subject_name from 
+        adminapp_teacher left join adminapp_kafedra on adminapp_teacher.kafedra_id = adminapp_kafedra.id
+        left join adminapp_subject on adminapp_teacher.subject_id = adminapp_subject.id""")
+        teachers = dictfetchall(cursor)
+        return teachers
+
 
 def get_student():
     with closing(connection.cursor()) as cursor:
-        cursor.execute(""" SELECT * from adminapp_students""")
-        group=dictfetchall(cursor)
-        return group
-
-
+        cursor.execute("""SELECT adminapp_student.id, adminapp_student.first_name, adminapp_student.last_name, 
+        adminapp_student.age, 
+        adminapp_group.name as group_name, adminapp_student.image as image  from adminapp_student
+        left join adminapp_group on adminapp_student.group_id = adminapp_group.id""")
+        student = dictfetchall(cursor)
+        return student
