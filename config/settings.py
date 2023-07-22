@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_soft.apps.AdminSoftDashboardConfig',  # <-- NEW
+    # 'admin_soft.apps.AdminSoftDashboardConfig',  # <-- NEW
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': "university_db",
-        'USER': "dashboard_user",
-        'PASSWORD': 'root',
+        'NAME': "univer_db",
+        'USER': "univer_admin",
+        'PASSWORD': 'berdi1234',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
