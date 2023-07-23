@@ -14,14 +14,13 @@ class Region(models.Model):
         return self.name
 class Unversity(models.Model):
     name=models.CharField(max_length=100,null=False,blank=False)
-    region=models.ForeignKey(Region,on_delete=models.SET_NULL,null=True)
     image = models.ImageField(upload_to='images', null=True)
-
+    region=models.ForeignKey(Region,on_delete=models.SET_NULL,null=True)
     def __str__(self):
         return self.name
 class Faculty(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
-
+    unversetit = models.ForeignKey(Unversity, null=True, on_delete=models.CASCADE)
     def __str__(self):
         return self.name
 
