@@ -33,6 +33,7 @@ def home_page(request):
     teachers = services.get_teacher()
     groups = services.get_groups()
     students = services.get_student()
+    unver=services.get_unversity()
     ctx={
         'counts' : {
             'faculties':len(faculties),
@@ -40,10 +41,32 @@ def home_page(request):
             'subjects':len(subjects),
             'teachers':len(teachers),
             'groups':len(groups),
-            'students':len(students)
+            'students':len(students),
+            'unver':len(unver)
         }
     }
     return render(request, 'index.html', ctx)
+
+@login_required_decorator
+def unversity_create(request):
+    model = Unversity()
+    form = UnversetyForm(request.POST or None, instance=model)
+    if request.POST and form.is_valid():
+        form.save()
+        return redirect('unver_list')
+    ctx = {
+        "model":model,
+        "form":form
+    }
+    return render(request,'unversetit/form.html',ctx)
+@login_required_decorator
+def unversity_list(request):
+    unversities=services.get_unversity()
+    print(unversities)
+    ctx={
+        "unversetits":unversities
+    }
+    return render(request,'unversetit/list.html',ctx)
 
 @login_required_decorator
 def faculty_create(request):
