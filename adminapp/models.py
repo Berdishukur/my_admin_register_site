@@ -4,12 +4,16 @@ from django.db import models
 # Create your models here.
 class Country(models.Model):
     name=models.CharField(max_length=100,null=False,blank=False)
+    image = models.ImageField(upload_to='images', null=True)
+
     def __str__(self):
         return self.name
 
 class Region(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     country=models.ForeignKey(Country,on_delete=models.SET_NULL,null=True)
+    image = models.ImageField(upload_to='images', null=True)
+
     def __str__(self):
         return self.name
 class Unversity(models.Model):
